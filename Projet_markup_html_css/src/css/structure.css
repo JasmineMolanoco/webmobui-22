@@ -126,7 +126,7 @@ main section.active { /* avec la classe "active", on affiche la section */
   display: flex;
 }
 
-#player-section {
+#player {
   height: 100%;
   padding: 0;
   /* cas special, le player prend tout l'espace et centre son contenu. Les autres section partent du haut */
