@@ -1,6 +1,6 @@
 import './css/index.css'
 import { fetchArtiste} from './api.js'
-import {fetchSong} from './section/fetchSong,js'
+import {fetchSong} from './section/fetchSong.js'
 
 
 window.location.hash = "home";
@@ -31,10 +31,7 @@ const displaySection = () => {
     case '#artists':
       // est-ce que le deuxième élément retourne quelque chose ? Et donc n’est pas undefined ? Oui?
       // Alors il y a un id et on affiche cet artiste
-      if (SpliteHash[1]) {
- 
-
-        afficherChansonsArtiste(SpliteHash[1])
+      if (SpliteHash[1]) {afficherChansonsArtiste(SpliteHash[1])
       }
       else {
         afficherArtistes()

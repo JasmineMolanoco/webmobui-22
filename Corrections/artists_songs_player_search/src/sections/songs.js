@@ -1,11 +1,15 @@
 import { getSongsForArtist, searchSongs } from '../api'
 import { setSongList, playSong } from './player'
+import JsonStorage from '../lib/jsonStorage'
 
 // Les tags dont nous avons besoin pour afficher les chansons
 const songsSection = document.querySelector('#songs-section')
 const songsSectionTitle = songsSection.querySelector('h4')
 const songList = songsSection.querySelector('.list')
 const songListItemTemplate = songsSection.querySelector('#song-list-item-template')
+
+//Tableau des favoris
+const favoriteStorage = new JsonStorage({ name: 'favorites' })
 
 // Render une chanson dans la liste
 function renderSong(song, songs) {
@@ -15,6 +19,18 @@ function renderSong(song, songs) {
     playSong(song, songs)
     window.location.hash = '#player'
   })
+  newSong.querySelector('#fav-button').addEventListener('click', () => {
+    playSong(song, songs)
+    window.location.hash = '#list'
+    
+    if (favoriteStorage.toArray().find((entry) => entry[1].id == idRecherché)) {
+      console.log("C’est dedans!")
+    } else {
+      console.log("ça n’y est pas…")
+    }
+  })
+
+
   songList.append(newSong)
 }
 
@@ -24,9 +40,9 @@ function renderSongs(songs) {
   songList.replaceChildren()
 
   // On regarde s'il y a des résultats, dans le cas échéant, on affiche un élément simple avec le texte "Aucun résultat"
-  if(songs.length) {
+  if (songs.length) {
     // On itère sur chaque élément
-    for(const song of songs) {
+    for (const song of songs) {
       renderSong(song, songs)
     }
   }
@@ -52,5 +68,6 @@ async function renderSearchSongsSection(query) {
   songsSectionTitle.innerText = `Résultats de recherche pour "${query}"`
   renderSongs(songs)
 }
+
 
 export { renderSongsSection, renderSearchSongsSection }
